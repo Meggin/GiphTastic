@@ -38,6 +38,8 @@
 // Data
 //_____________________________________________________________________________________
 
+var topics = ["dog", "cat", "bird", "snake"];
+
 
 // Global variables
 //____________________________________________________________________________________
@@ -45,13 +47,77 @@
 
 // Event listeners
 //____________________________________________________________________________________
-
+// Add click event listener to all elements with a class of "topic".
+$(document).on("click", ".topic", retrieveGiphs);
 
 // Functions
 //_____________________________________________________________________________________
 
 
+// Render buttons for each topic in topics array.
+function renderButtons() {
+	// Delete the topics prior to adding new topics.
+	// This is to avoid duplicate buttons.
+	$("#buttons-container").empty();
+
+	// Loop through the array of topics
+	for (var i = 0; i < topics.length; i++) {
+
+	  // Dynamically generate buttons for each topic in the array.
+	  var a = $("<button>");
+	  // Add a class of topic to button.
+	  a.addClass("topic");
+	  // Add a data-attribute needed for giph search.
+	  a.attr("data-name", topics[i]);
+	  // Provide initial button text.
+	  a.text(topics[i]);
+	  // Add button to the buttons-container div.
+	  $("#buttons-container").append(a);
+	}
+}
+
+// Retrieve giphs for selected topic.
+function retrieveGiphs() {
+	var topic = $(this).attr("data-name");
+
+	// Todo: still need to set limit to 10 and deal with multiple items.
+	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
+
+	console.log("Query looks like this: " + queryURL); 
+
+	// Create AJAX call for the specific topic.
+	$.ajax({
+	url: queryURL,
+	method: "GET"
+	}).done(function(response) {
+
+	  console.log(response);
+
+	  // Display retrieved giphs.
+	  displayGiphs(response);
+
+	});
+}
+
+// Display giphs in DOM.
+function displayGiphs(response) {
+
+	for (var i = 0; i < response.data.length; i++) {
+		var giphDiv = $("<div class='giph'>");
+
+		// Store the rating data for a giph.
+		var rating = response.data[i].rating;
+
+		// Create an element to store the rating info.
+		var ratingInfo = $("<p>").text("Rating: " + rating);
+
+		// Display rating.
+		giphDiv.append(ratingInfo);
+
+		$("#display-giphs").append(giphDiv);
+	}
+};
+
 $(document).ready(function() {
-
-
+	renderButtons();
 });
