@@ -102,7 +102,13 @@ function retrieveGiphs() {
 // Display giphs in DOM.
 function displayGiphs(response) {
 
+	// Delete existing giphs to make room for new giphs. 
+	$("#display-giphs").empty();
+
+	// Loop through array of giphy responses... 
 	for (var i = 0; i < response.data.length; i++) {
+
+		// Dynamically generate divs for each giph.
 		var giphDiv = $("<div class='giph'>");
 
 		// Store the rating data for a giph.
@@ -114,6 +120,11 @@ function displayGiphs(response) {
 		// Display rating.
 		giphDiv.append(ratingInfo);
 
+		var giphURL = response.data[i].embed_url;
+
+		var giphImage = $("<iframe>").attr("src", giphURL);
+
+		// Add giph div to giph section.
 		$("#display-giphs").append(giphDiv);
 	}
 };
