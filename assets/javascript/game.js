@@ -125,7 +125,7 @@ function displayGiphs(response) {
 		var giphImage = $("<iframe>").attr("src", giphURL);
 
 		// Add giph div to giph section.
-		$("#display-giphs").append(giphDiv);
+		$("#display-giphs").append(giphDiv, giphImage);
 	}
 };
 
