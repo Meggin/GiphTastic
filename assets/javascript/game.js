@@ -38,7 +38,7 @@
 // Data
 //_____________________________________________________________________________________
 
-var topics = ["dog", "cat", "bird", "snake"];
+var topics = [];
 
 
 // Global variables
@@ -49,7 +49,11 @@ var topics = ["dog", "cat", "bird", "snake"];
 //____________________________________________________________________________________
 // Add click event listener to all elements with a class of "topic".
 function addTopicClickEventListener() {
-	$(document).on("click", ".topic", retrieveGiphs);
+	$(".topic").on("click", function() {
+		var topic = $(this).attr("data-name");
+		console.log("This is the correct topic: " + topic);
+		retrieveGiphs(topic);
+	});
 };
 
 // Add click event listener to all elements with a class of "gif".
@@ -88,6 +92,10 @@ function addNewTopicClickEventListener() {
 
 	  	renderButtons();
 
+
+	  	var topic = newTopic;
+	  	retrieveGiphs(topic);
+
 	  	$("input:text").val("");
 	  }
 
@@ -119,11 +127,10 @@ function renderButtons() {
 	  // Add button to the buttons-container div.
 	  $("#buttons-container").append(a);
 	}
+	addTopicClickEventListener();
 }
-
 // Retrieve giphs for selected topic.
-function retrieveGiphs() {
-	var topic = $(this).attr("data-name");
+function retrieveGiphs(topic) {
 
 	// Todo: still need to set limit to 10 and deal with multiple items.
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
