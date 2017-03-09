@@ -70,12 +70,37 @@ function addGiphClickEventListener() {
 	});
 };
 
+function addNewTopicClickEventListener() {
+	// This function handles events where one button is clicked
+	$("#add-animal").on("click", function() {
+
+	  // YOUR CODE GOES HERE
+	  event.preventDefault();
+
+	  var newTopic = $("#topic-input").val().trim();
+
+	  console.log("New topic: " + newTopic);
+
+	  if (newTopic === "") {
+	  	return;
+	  } else {
+	  	topics.push(newTopic);
+
+	  	renderButtons();
+
+	  	$("input:text").val("");
+	  }
+
+	});
+}
+
 // Functions
 //_____________________________________________________________________________________
 
 
 // Render buttons for each topic in topics array.
 function renderButtons() {
+
 	// Delete the topics prior to adding new topics.
 	// This is to avoid duplicate buttons.
 	$("#buttons-container").empty();
@@ -86,7 +111,7 @@ function renderButtons() {
 	  // Dynamically generate buttons for each topic in the array.
 	  var a = $("<button>");
 	  // Add a class of topic to button.
-	  a.addClass("topic, btn, btn-default, btn-lg");
+	  a.addClass("topic");
 	  // Add a data-attribute needed for giph search.
 	  a.attr("data-name", topics[i]);
 	  // Provide initial button text.
@@ -165,4 +190,5 @@ function displayGiphs(response) {
 $(document).ready(function() {
 	renderButtons();
 	addTopicClickEventListener();
+	addNewTopicClickEventListener();
 });
