@@ -49,10 +49,15 @@ function addNewTopicClickEventListener() {
 
 	  console.log("New topic: " + newTopic);
 
+	  var alreadyTopicCheck = jQuery.inArray(newTopic, topics);
+
 	  // Don't create a new topic for an empty string.
 	  if (newTopic === "") {
 	  	return;
-
+	  } else if (alreadyTopicCheck !== -1){
+	  	// Clear out input text as a courtesy to your user.
+	  	$("#topic-input").val("");
+	  	return;
 	  } else {
 
 	  	checkTopicExists(newTopic);
