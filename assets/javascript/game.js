@@ -2,6 +2,7 @@
 //____________________________________________________________________________________
 // Array that will hold giphs.
 var topics = [];
+var topicNotFound;
 
 
 // Event listeners
@@ -52,28 +53,61 @@ function addNewTopicClickEventListener() {
 	  if (newTopic === "") {
 	  	return;
 
-	  // Push new topic to array.
-	  // Render buttons to include new topic.
-	  // Retrieve giphs for new topic.
 	  } else {
-	  	topics.push(newTopic);
 
-	  	renderButtons();
+	  	checkTopicExists(newTopic);
 
-
-	  	var topic = newTopic;
-	  	retrieveGiphs(topic);
-
-	  	// Clear out input text as a courtesy to your user.
-	  	$("input:text").val("");
 	  }
 
 	});
-}
+};
 
 // Functions
 //_____________________________________________________________________________________
 
+
+//TODO
+function checkTopicExists(newTopic) {
+	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + newTopic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
+
+	console.log("Query looks like this: " + queryURL); 
+
+	// Create AJAX call for the specific topic.
+	$.ajax({
+	url: queryURL,
+	method: "GET"
+	}).done(function(response) {
+
+	  console.log(response);
+
+	  // If giphs exist... 
+	  if (response.data.length === 0) {
+
+	  	alert("No giphs found for that animal!");
+	  	// Clear out input text as a courtesy to your user.
+	  	$("#topic-input").val("");
+
+	  	return;
+
+	  // Push new topic to array.
+	  // Render buttons to include new topic.
+	  // Retrieve giphs for new topic.
+	  } else {
+
+	  	// Display retrieved giphs.
+	  	retrieveGiphs(newTopic);
+
+	  	topics.push(newTopic);
+
+	  	renderButtons();
+
+	  	// Clear out input text as a courtesy to your user.
+	  	$("#topic-input").val("");
+	  }
+
+	});
+
+};
 
 // Render buttons for each topic in topics array.
 function renderButtons() {
@@ -98,7 +132,8 @@ function renderButtons() {
 	}
 	// Add listeners to dynamic buttons.
 	addTopicClickEventListener();
-}
+};
+
 // Retrieve giphs for selected topic.
 function retrieveGiphs(topic) {
 
@@ -115,11 +150,23 @@ function retrieveGiphs(topic) {
 
 	  console.log(response);
 
-	  // Display retrieved giphs.
-	  displayGiphs(response);
+	  // If giphs exist... 
+	  if (response.data.length !== 0) {
+	  	
+	  	// Display retrieved giphs.
+	  	displayGiphs(response);
+
+	  	return topicNotFound = false;
+
+	  	// Todo: handle words that have no giphs.
+	  } else {
+	  	console.log("There's no giphs for: " + topic);
+
+	  	return topicNotFound = true;
+	  }
 
 	});
-}
+};
 
 // Display giphs in DOM.
 function displayGiphs(response) {
