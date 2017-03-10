@@ -4,12 +4,45 @@
 }
 
 html {
+	background-color: #f8f8f8;
+}
+
+.row {
+	background-color: #f8f8f8;
+}
+
+.col-md-9 {
+	background-color: #f8f8f8;
+}
+
+.col-md-3 {
+	background-color: #f8f8f8;
+}
+
+.well {
+	border: none;
+}
+
+.navbar {
+	margin-bottom: 0;
 }
 
 header {
 }
 
-li {
+.pull-left {
+  float: left !important;
+  max-width: 300px;
+  overflow: auto;
+  padding: 1%;
+}
+
+.gif {
+	max-width: 100%;
+}
+
+.rating {
+	padding: 2%;
 }
 
 .hover {
@@ -18,12 +51,20 @@ li {
 section {
 }
 
-button {
-	width: 40%;
-	height: 10%;
-	font-size: 20px;
-	border: 2px solid black;
-	background: #ccc;
+.btn-default {
+	color: #ffffff;
+	background-color: #4aaaa5;
+	margin: 1%;
+}
+
+#add-animal {
+	margin: 2%;
+	font-size: 15px;
+
+}
+
+.navbar-default {
+	border: none;
 }
 
 /* 

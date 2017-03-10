@@ -183,13 +183,13 @@ function displayGiphs(response) {
 	for (var i = 0; i < response.data.length; i++) {
 
 		// Dynamically generate divs for each giph.
-		var giphDiv = $("<div class='giph'>");
+		var giphDiv = $("<div class='giph pull-left'>");
 
 		// Store the rating data for a giph.
 		var rating = response.data[i].rating;
 
 		// Create an element to store the rating info.
-		var ratingInfo = $("<p>").text("Rating: " + rating);
+		var ratingInfo = $("<div class='rating'>").text("Rating: " + rating);
 
 		// Display rating.
 		giphDiv.append(ratingInfo);
@@ -212,8 +212,10 @@ function displayGiphs(response) {
 		// Default src displayed is still giph.
 		giphImage.attr("data-state", "still");
 
+		giphDiv.append(giphImage);
+
 		// Add giph div to giph section.
-		$("#display-giphs").append(giphDiv, giphImage);
+		$("#display-giphs").append(giphDiv);
 
 	}
 
