@@ -80,7 +80,7 @@ function renderButtons() {
 
 	// Delete the topics prior to adding new topics.
 	// This is to avoid duplicate buttons.
-	$("#buttons-container").empty();
+	$(".buttons-container").empty();
 
 	// Loop through the array of topics
 	for (var i = 0; i < topics.length; i++) {
@@ -88,13 +88,13 @@ function renderButtons() {
 	  // Dynamically generate buttons for each topic in the array.
 	  var a = $("<button>");
 	  // Add a class of topic to button.
-	  a.addClass("topic");
+	  a.addClass("topic btn btn-default navbar-btn");
 	  // Add a data-attribute needed for giph search.
 	  a.attr("data-name", topics[i]);
 	  // Provide initial button text.
 	  a.text(topics[i]);
 	  // Add button to the buttons-container div.
-	  $("#buttons-container").append(a);
+	  $(".buttons-container").append(a);
 	}
 	// Add listeners to dynamic buttons.
 	addTopicClickEventListener();
