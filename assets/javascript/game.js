@@ -1,48 +1,7 @@
-// Todo: create an on click event for submit button.
-
-// Todo: when this event fires, append the user input to an array of strings, call topics.
-
-// Todo: create function to create buttons for each item in the array.
-// These buttons live in buttons-container.
-// Need to work out if we should have a separate function for adding a single item to array
-// and creating one new button at a time, in addition to creating full list of buttons from the array.
-
-// Todo: create an event listener for when a user clicks on a topic button.
-// When this event fires, need to remove the existing giphs displayed,
-// showing giphs for selected topic.
-
-// Todo: when user clicks submit, or when user clicks on button, it is triggering the call to the Giphy API.
-
-// Todo: create function to call the Giphy API with search parameters based on the item clicked on,
-// be it either the Submit button with user input values, or the button clicked on with a button title.
-// Should return 10 gifs that match the search parameter.
-// We need a static image, the mp4 for animation, the rating, and possibly other details like caption.
-
-// Todo: display 10 returned giphies in the display giphs section, with their ratings.
-
-// Todo: create event listener for when user clicks on giph.
-
-// Todo: create function to animate giph when click on giph event fires.
-// Will use the mp4 to control animations.
-// Thinking I need to use video API.
-
-// Todo: create function to stop giph animation when user clicks a second time on a giph.
-// Again, using mp4 to stop animations.
-// And again, will use video API.
-
-// Todo: I'm fairly sure that we don't want to hold up any content from appearing on the page,
-// if available, so we will want to be careful about calling for data outside document.ready?
-// Not exactly sure what the impact is, but will want to be wary of this.
-
-
-// Data
-//_____________________________________________________________________________________
-
-var topics = [];
-
-
-// Global variables
+// Global variable.
 //____________________________________________________________________________________
+// Array that will hold giphs.
+var topics = [];
 
 
 // Event listeners
@@ -50,8 +9,12 @@ var topics = [];
 // Add click event listener to all elements with a class of "topic".
 function addTopicClickEventListener() {
 	$(".topic").on("click", function() {
+
+		// Set topic to selected item.
 		var topic = $(this).attr("data-name");
 		console.log("This is the correct topic: " + topic);
+
+		// Retrieve giphs for selected topic.
 		retrieveGiphs(topic);
 	});
 };
@@ -59,11 +22,11 @@ function addTopicClickEventListener() {
 // Add click event listener to all elements with a class of "gif".
 function addGiphClickEventListener() {
 	$(".gif").on("click", function() {
-	  // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+	  // Set the value of "data-state" attribute.
 	  var state = $(this).attr("data-state");
 	  // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-	  // Then, set the image's data-state to animate
-	  // Else set src to the data-still value
+	  // Then, set the image's data-state to animate.
+	  // Else set src to the data-still value.
 	  if (state === "still") {
 	    $(this).attr("src", $(this).attr("data-animate"));
 	    $(this).attr("data-state", "animate");
@@ -74,19 +37,24 @@ function addGiphClickEventListener() {
 	});
 };
 
+// Add click event listener to all elements with "add-animal" ID.
 function addNewTopicClickEventListener() {
-	// This function handles events where one button is clicked
 	$("#add-animal").on("click", function() {
 
-	  // YOUR CODE GOES HERE
 	  event.preventDefault();
 
+	  // Create new topic from input value.
 	  var newTopic = $("#topic-input").val().trim();
 
 	  console.log("New topic: " + newTopic);
 
+	  // Don't create a new topic for an empty string.
 	  if (newTopic === "") {
 	  	return;
+
+	  // Push new topic to array.
+	  // Render buttons to include new topic.
+	  // Retrieve giphs for new topic.
 	  } else {
 	  	topics.push(newTopic);
 
@@ -96,6 +64,7 @@ function addNewTopicClickEventListener() {
 	  	var topic = newTopic;
 	  	retrieveGiphs(topic);
 
+	  	// Clear out input text as a courtesy to your user.
 	  	$("input:text").val("");
 	  }
 
@@ -127,12 +96,13 @@ function renderButtons() {
 	  // Add button to the buttons-container div.
 	  $("#buttons-container").append(a);
 	}
+	// Add listeners to dynamic buttons.
 	addTopicClickEventListener();
 }
 // Retrieve giphs for selected topic.
 function retrieveGiphs(topic) {
 
-	// Todo: still need to set limit to 10 and deal with multiple items.
+	// Query giphy API to retrieve 10 giphs matching the topic.
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
 
 	console.log("Query looks like this: " + queryURL); 
@@ -157,7 +127,7 @@ function displayGiphs(response) {
 	// Delete existing giphs to make room for new giphs. 
 	$("#display-giphs").empty();
 
-	// Loop through array of giphy responses... 
+	// Loop through array of giph responses... 
 	for (var i = 0; i < response.data.length; i++) {
 
 		// Dynamically generate divs for each giph.
@@ -172,10 +142,13 @@ function displayGiphs(response) {
 		// Display rating.
 		giphDiv.append(ratingInfo);
 
+		// Store original gif for animations.
 		var originalGiph = response.data[i].images.original.url;
 
+		// Store still version of gif for still state.
 		var stillGiph = response.data[i].images.original_still.url;
 
+		// Append src to image.
 		var giphImage = $("<img>").attr("src", stillGiph);
 
 		giphImage.addClass("gif");
@@ -184,6 +157,7 @@ function displayGiphs(response) {
 
 		giphImage.attr("data-animate", originalGiph);
 
+		// Default src displayed is still giph.
 		giphImage.attr("data-state", "still");
 
 		// Add giph div to giph section.
@@ -191,11 +165,16 @@ function displayGiphs(response) {
 
 	}
 
+	// Add listeners to dynamic giphs.
 	addGiphClickEventListener();
 };
 
 $(document).ready(function() {
+	// We don't need to render buttons with an empty array at the start.
+	// But it's nice to have the option to give the array values
+	// And this will make it work at the start.
 	renderButtons();
-	addTopicClickEventListener();
+	// Input form is in the html file.
+	// So listener needed when document ready.
 	addNewTopicClickEventListener();
 });
