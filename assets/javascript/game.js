@@ -1,9 +1,7 @@
-// Global variable.
+// Global variables.
 //____________________________________________________________________________________
-// Array that will hold giphs.
+// Array that holds giphs.
 var topics = [];
-var topicNotFound;
-
 
 // Event listeners
 //____________________________________________________________________________________
@@ -13,7 +11,6 @@ function addTopicClickEventListener() {
 
 		// Set topic to selected item.
 		var topic = $(this).attr("data-name");
-		console.log("This is the correct topic: " + topic);
 
 		// Retrieve giphs for selected topic.
 		retrieveGiphs(topic);
@@ -47,8 +44,6 @@ function addNewTopicClickEventListener() {
 	  // Create new topic from input value.
 	  var newTopic = $("#topic-input").val().trim();
 
-	  console.log("New topic: " + newTopic);
-
 	  var alreadyTopicCheck = jQuery.inArray(newTopic, topics);
 
 	  // Don't create a new topic for an empty string.
@@ -60,6 +55,8 @@ function addNewTopicClickEventListener() {
 	  	return;
 	  } else {
 
+	  	// Check if topic exists first.
+	  	// If so, will retrieve data.
 	  	checkTopicExists(newTopic);
 
 	  }
@@ -71,11 +68,9 @@ function addNewTopicClickEventListener() {
 //_____________________________________________________________________________________
 
 
-//TODO
+// First check topic exists.
 function checkTopicExists(newTopic) {
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + newTopic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
-
-	console.log("Query looks like this: " + queryURL); 
 
 	// Create AJAX call for the specific topic.
 	$.ajax({
@@ -88,15 +83,17 @@ function checkTopicExists(newTopic) {
 	  // If giphs exist... 
 	  if (response.data.length === 0) {
 
+	  	// Let user know that no data exists.
 	  	alert("No giphs found for that animal!");
 	  	// Clear out input text as a courtesy to your user.
 	  	$("#topic-input").val("");
 
 	  	return;
 
-	  // Push new topic to array.
-	  // Render buttons to include new topic.
-	  // Retrieve giphs for new topic.
+	  // If topic exists...
+	  // Retrieve giphs.
+	  // Push topic to topics array.
+	  // Render buttons.
 	  } else {
 
 	  	// Display retrieved giphs.
@@ -145,8 +142,6 @@ function retrieveGiphs(topic) {
 	// Query giphy API to retrieve 10 giphs matching the topic.
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
 
-	console.log("Query looks like this: " + queryURL); 
-
 	// Create AJAX call for the specific topic.
 	$.ajax({
 	url: queryURL,
@@ -155,20 +150,7 @@ function retrieveGiphs(topic) {
 
 	  console.log(response);
 
-	  // If giphs exist... 
-	  if (response.data.length !== 0) {
-	  	
-	  	// Display retrieved giphs.
-	  	displayGiphs(response);
-
-	  	return topicNotFound = false;
-
-	  	// Todo: handle words that have no giphs.
-	  } else {
-	  	console.log("There's no giphs for: " + topic);
-
-	  	return topicNotFound = true;
-	  }
+	  displayGiphs(response);
 
 	});
 };
@@ -225,8 +207,8 @@ function displayGiphs(response) {
 
 $(document).ready(function() {
 	// We don't need to render buttons with an empty array at the start.
-	// But it's nice to have the option to give the array values
-	// And this will make it work at the start.
+	// But since we will be working with persistence soon,
+	// Seemed nice to keep this here for future use.
 	renderButtons();
 	// Input form is in the html file.
 	// So listener needed when document ready.

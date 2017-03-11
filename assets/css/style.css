@@ -7,7 +7,26 @@ html {
 	background-color: #f8f8f8;
 }
 
-.row {
+label {
+	display: block;
+}
+
+#add-animal {
+	margin: 2%;
+	font-size: 15px;
+}
+
+#topic-input {
+	width: 90%;
+}
+
+.btn-default {
+	color: #ffffff;
+	background-color: #4aaaa5;
+	margin: 1%;
+}
+
+.col-md-3 {
 	background-color: #f8f8f8;
 }
 
@@ -15,8 +34,8 @@ html {
 	background-color: #f8f8f8;
 }
 
-.col-md-3 {
-	background-color: #f8f8f8;
+.gif {
+	max-width: 100%;
 }
 
 .well {
@@ -27,7 +46,8 @@ html {
 	margin-bottom: 0;
 }
 
-header {
+.navbar-default {
+	border: none;
 }
 
 .pull-left {
@@ -37,70 +57,45 @@ header {
   padding: 1%;
 }
 
-.gif {
-	max-width: 100%;
+.pull-right {
+  float: right !important;
+  width: 100%;
+  overflow: auto;
+  padding: 1%;
 }
 
 .rating {
 	padding: 2%;
 }
 
-.hover {
+.row {
+	background-color: #f8f8f8;
 }
-
-section {
-}
-
-.btn-default {
-	color: #ffffff;
-	background-color: #4aaaa5;
-	margin: 1%;
-}
-
-#add-animal {
-	margin: 2%;
-	font-size: 15px;
-
-}
-
-.navbar-default {
-	border: none;
-}
-
-/* 
-  These rules take effect when the browser's width
-  is 1200px or more.
-*/
-@media screen and (min-width: 1200px) {
-
-
-/* 
-  These rules take effect when the browser's width
-  is 1024px or more.
-*/
-@media screen and (min-width: 1024px) {
-
-}
-
-/* 
-  These rules take effect when the browser's width
-  is 769px or more.
-*/
-@media screen and (max-width: 980px) {
-
-	/*
-	  No specific rules for large screens at this time.
-	*/
-
-}
-	
 
 /* 
   These rules take effect when the browser's width
   is 641px or more.
 */
 @media screen and (max-width: 768px) {
-	
+
+	#add-animal {
+		margin-top: 10%;
+	}
+
+	#select-giph {
+		position: absolute;
+	  	top: 35px;
+	  	/* 
+	     Not ideal, but it lets all the important stuff be shown
+	     without making things unusable.
+	  	*/
+	  	z-index: -1;
+	}
+
+	#display-giphs {
+		position: absolute;
+		top: 190px;
+	}	
 }
 
 /* 
@@ -108,7 +103,22 @@ section {
   is 640px or less.
 */
 @media screen and (max-width: 640px) {
-	
 
+#add-animal {
+	margin-top: 10%;
+}
 
+#select-giph {
+  position: absolute;
+  top: 35px;
+  /* 
+    Not ideal, but it lets all the important stuff be shown
+    without making things unusable.
+  */
+  z-index: -1;
+}
+
+#display-giphs {
+	position: absolute;
+	top: 190px;
 }
