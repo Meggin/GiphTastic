@@ -70,7 +70,7 @@ function addNewTopicClickEventListener() {
 
 // First check topic exists.
 function checkTopicExists(newTopic) {
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + newTopic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + newTopic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
 
 	// Create AJAX call for the specific topic.
 	$.ajax({
@@ -140,7 +140,7 @@ function renderButtons() {
 function retrieveGiphs(topic) {
 
 	// Query giphy API to retrieve 10 giphs matching the topic.
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic  + "&limit=10&api_key=dc6zaTOxFJmzC";  
 
 	// Create AJAX call for the specific topic.
 	$.ajax({
