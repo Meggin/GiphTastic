@@ -16,6 +16,6 @@ But the one tricky thing with bootstrap, is you have to rely on how it behaves, 
 
 I had to use media queries to get the menus to behave, and z-index. It's not perfect, but at least the user can do what they need to do one different device sizes without a whole lot of scroll-tastic.
 
-Link to URL:
+Link to URL: https://still-meadow-12295.herokuapp.com/
 
 On to the next assignment!
